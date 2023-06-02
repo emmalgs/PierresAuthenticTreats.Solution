@@ -34,5 +34,9 @@ namespace PierresAuthenticTreats.Controllers
                               .ToList();
       return View(userTreats);
     }
+
+    public ViewResult Create() => View();
+
+    
   }
 }

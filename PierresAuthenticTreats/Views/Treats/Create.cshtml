@@ -1,0 +1,17 @@
+@{
+  Layout = "_Layout";
+}
+@model PierresAuthenticTreats.Models.Treat
+
+<h2>Add a new treat</h2>
+
+@using (Html.BeginForm())
+{
+  @Html.LabelFor(m => m.Name)
+  @Html.TextBoxFor(m => m.Name)
+
+  @Html.LabelFor(m => m.Price)
+  @Html.TextBoxFor(m => m.Price, new { type="number", step="any"})
+
+  <input type="submit" value="Create Treat" class="btn btn-primary" />
+}
