@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PierresAuthenticTreats.Models;
 
@@ -10,9 +11,10 @@ using PierresAuthenticTreats.Models;
 namespace PierresAuthenticTreats.Migrations
 {
     [DbContext(typeof(PierreContext))]
-    partial class PierreContextModelSnapshot : ModelSnapshot
+    [Migration("20230602183340_RemoveUserPropertyFromFlavors")]
+    partial class RemoveUserPropertyFromFlavors
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
