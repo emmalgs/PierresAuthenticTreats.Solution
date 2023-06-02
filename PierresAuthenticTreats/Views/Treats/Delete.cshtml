@@ -1,0 +1,15 @@
+@{
+  Layout = "_Layout";
+}
+
+@model PierresAuthenticTreats.Models.Treat
+
+<h2 class="text-danger">Are you ABSOLUTELY POSITIVELY no joke sure FUR SURE you want to delete @Model.Name?!</h2>
+
+@using (Html.BeginForm("Delete", "Treats", FormMethod.Post))
+{
+  @Html.HiddenFor(m => m.TreatId)
+  <input type="submit" value="YES" class="btn btn-danger" />
+}
+
+@Html.ActionLink("Nevermind", "Index", null, null, new { @class="btn btn-primary" })

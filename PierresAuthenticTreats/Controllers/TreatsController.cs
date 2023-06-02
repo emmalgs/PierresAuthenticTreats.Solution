@@ -124,5 +124,20 @@ namespace PierresAuthenticTreats.Controllers
       }
       return RedirectToAction("Details", new { id = treat.TreatId });
     }
+
+    public ActionResult Delete(int id)
+    {
+      Treat thisTreat = _db.Treats.FirstOrDefault(t => t.TreatId == id);
+      return View(thisTreat);
+    }
+
+    [HttpPost, ActionName("Delete")]
+    public ActionResult DeleteConfirmed(int id)
+    {
+      Treat thisTreat = _db.Treats.FirstOrDefault(t => t.TreatId == id);
+      _db.Treats.Remove(thisTreat);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
   }
 }
