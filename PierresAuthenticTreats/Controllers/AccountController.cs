@@ -35,7 +35,7 @@ namespace PierresAuthenticTreats.Controllers
       }
       else
       {
-        AppUser user = new AppUser { UserName = model.UserName };
+        AppUser user = new AppUser { UserName = model.UserName, Email = model.Email };
         IdentityResult result = await _userManager.CreateAsync(user, model.Password);
         if (result.Succeeded)
         {
