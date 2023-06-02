@@ -23,7 +23,7 @@ namespace Library
                         )
                       );
       
-      builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+      builder.Services.AddIdentity<AppUser, IdentityRole>()
           .AddEntityFrameworkStores<PierreContext>()
           .AddDefaultTokenProviders();
 
