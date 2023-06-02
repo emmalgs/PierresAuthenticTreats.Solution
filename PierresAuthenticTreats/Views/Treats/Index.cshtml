@@ -4,6 +4,7 @@
 
 @using PierresAuthenticTreats.Models
 
+<div class="treats-home">
 <h2>Treats for @User.Identity.Name</h2>
 
 @if (Model.Count == 0)
@@ -14,8 +15,16 @@ else
 {
   @foreach (Treat treat in Model)
   {
-    <p>@Html.ActionLink($"{treat.Name}", "Details", new { id = treat.TreatId }) | @Html.ActionLink("Delete", "Delete", new { id = treat.TreatId }, new { @class="btn btn-danger"})</p>
+    <div class="treats-list">
+      <p><em>@treat.Name</em></p>
+      <div class="btn-group">
+        @Html.ActionLink("Edit", "Details", new { id = treat.TreatId }, new { @class = "treat-link btn" }) 
+        @Html.ActionLink("Delete", "Delete", new { id = treat.TreatId }, new { @class="btn btn-danger"})
+      </div>
+    </div>
+    
   }
 }
 
-@Html.ActionLink("Create Treat", "Create")
+@Html.ActionLink("Create Treat", "Create", null, null, new { @class="btn btn-primary"})
+</div>

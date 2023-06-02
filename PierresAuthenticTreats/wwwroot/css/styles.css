@@ -48,7 +48,7 @@
   margin: 40px;
 }
 
-.details {
+.details, .treats-home {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -83,6 +83,18 @@ table td .btn {
   margin: auto;
   text-align: center;
   background-color: var(--secondary-contrast);
+}
+
+.treats-list {
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+}
+
+.treat-link {
+  text-decoration: none;
+  color: var(--main-color)
 }
 
 #footer {
