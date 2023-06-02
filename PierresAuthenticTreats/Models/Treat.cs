@@ -8,5 +8,6 @@ namespace PierresAuthenticTreats.Models
     public string Name { get; set; }
     public float Price { get; set; }
     public List<FlavorTreat> JoinEntities { get; }
+    public AppUser User { get; set; }
   }
 }
