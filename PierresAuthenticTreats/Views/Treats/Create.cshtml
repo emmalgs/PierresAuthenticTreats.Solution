@@ -13,5 +13,14 @@
   @Html.LabelFor(m => m.Price)
   @Html.TextBoxFor(m => m.Price, new { type="number", step="any"})
 
+  <label for="flavors">Flavor: </label>
+  <input type="text" name="flavor" list="flavors">
+  <datalist id="flavors">
+    @foreach (var flavor in ViewBag.Flavors)
+    {
+      <option value="@flavor.Text">@flavor.Text</option>
+    }
+  </datalist>
+
   <input type="submit" value="Create Treat" class="btn btn-primary" />
 }
