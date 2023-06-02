@@ -22,6 +22,34 @@ namespace PierresAuthenticTreats.Controllers
       _signInManager = signInManager;
     }
 
-    
+    public ViewResult Index() => View();
+
+    public IActionResult Register() => View();
+
+    [HttpPost]
+    public async Task<IActionResult> Register(RegisterViewModel model)
+    {
+      if (!ModelState.IsValid)
+      {
+        return View(model);
+      }
+      else
+      {
+        AppUser user = new AppUser { UserName = model.UserName };
+        IdentityResult result = await _userManager.CreateAsync(user, model.Password);
+        if (result.Succeeded)
+        {
+          return RedirectToAction("Index");
+        }
+        else
+        {
+          foreach (IdentityError error in result.Errors)
+          {
+            ModelState.AddModelError("", error.Description);
+          }
+          return View(model);
+        }
+      }
+    }
   }
 }
