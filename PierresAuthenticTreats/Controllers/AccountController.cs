@@ -39,7 +39,7 @@ namespace PierresAuthenticTreats.Controllers
         IdentityResult result = await _userManager.CreateAsync(user, model.Password);
         if (result.Succeeded)
         {
-          return RedirectToAction("Index");
+          return RedirectToAction("Login");
         }
         else
         {
@@ -50,6 +50,37 @@ namespace PierresAuthenticTreats.Controllers
           return View(model);
         }
       }
+    }
+
+    public ViewResult Login() => View();
+
+    [HttpPost]
+    public async Task<ActionResult> Login(LoginViewModel model)
+    {
+      if (!ModelState.IsValid)
+      {
+        return View(model);
+      }
+      else
+      {
+        Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(model.UserName, model.Password, isPersistent: true, lockoutOnFailure: false);
+        if (result.Succeeded)
+        {
+          return RedirectToAction("Index");
+        }
+        else
+        {
+          ModelState.AddModelError("", "Invalid user name or password");
+          return View(model);
+        }
+      }
+    }
+
+    [HttpPost]
+    public async Task<ActionResult> LogOff()
+    {
+      await _signInManager.SignOutAsync();
+      return RedirectToAction("Index");
     }
   }
 }
