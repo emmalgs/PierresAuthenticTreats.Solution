@@ -3,8 +3,17 @@
 }
 
 @model PierresAuthenticTreats.Models.Treat
-
+<hr />
 <h2>Edit @Model.Name</h2>
+<hr />
+
+<h3>Current flavor(s) in @Model.Name:</h3>
+<ul>
+  @foreach (FlavorTreat join in Model.JoinEntities)
+  {
+    <li>@join.Flavor.Type</li>
+  }
+</ul>
 
 @using (Html.BeginForm())
 {
@@ -17,7 +26,7 @@
   @Html.EditorFor(m => m.Price, new { type="number", step="any" })
 
   <label for="flavors">Add Additional Flavor: </label>
-  <input type="text" name="flavor" list="flavors">
+  <input name="flavor" list="flavors">
   <datalist id="flavors">
     @foreach (var flavor in ViewBag.Flavors)
     {
@@ -34,8 +43,24 @@
 <ul>
 @foreach (FlavorTreat join in Model.JoinEntities)
 {
-  <li>@join.Flavor.Type</li>
-
-
+  <li>
+    <span>
+      @using (Html.BeginForm("Edit", "Flavors", FormMethod.Post))
+      {
+        @Html.Hidden("flavorId", join.Flavor.FlavorId)
+        @Html.Hidden("treatId", Model.TreatId)
+        @Html.TextBox("type", join.Flavor.Type)
+        <input type="submit" class="btn btn-primary" value="Edit" />
+      }
+  </span>
+  <span>
+      @using (Html.BeginForm("Delete", "Flavors", FormMethod.Post))
+      {
+        @Html.Hidden("flavorId", join.Flavor.FlavorId)
+        @Html.Hidden("treatId", Model.TreatId)
+        <input type="submit" class="btn btn-danger" value="Delete" />
+      }
+  </span>
+  </li>
 }
 </ul>
