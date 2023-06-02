@@ -8,7 +8,7 @@
   <h2>Welcome Back, @User.Identity.Name!</h2>
 
   <p>Current order total: @Model[0].User.OrderTotal.ToString("C2")</p>
-  <p>Your Treats: </p>
+  <h4>Your Treats: </h4>
   <table class="table-bordered">
     <tr><th>Name</th><th>Flavor</th><th>Price</th></tr>
     @foreach (Treat treat in Model)
