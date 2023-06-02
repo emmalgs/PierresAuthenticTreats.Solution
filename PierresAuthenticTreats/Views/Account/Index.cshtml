@@ -1,12 +1,30 @@
 @{
   Layout = "_Layout";
 }
-
+<div class="home-splash">
+@using PierresAuthenticTreats.Models
 @if (User.Identity.IsAuthenticated)
 {
   <h2>Welcome Back, @User.Identity.Name!</h2>
 
-  <p>Current order total: @Model.OrderTotal.ToString("C2")</p>
+  <p>Current order total: @Model[0].User.OrderTotal.ToString("C2")</p>
+  <p>Your Treats: </p>
+  <table class="table-bordered">
+    <tr><th>Name</th><th>Flavor</th><th>Price</th></tr>
+    @foreach (Treat treat in Model)
+    {
+      <tr>
+        <td>@treat.Name</td>
+        <td>
+          @foreach (FlavorTreat join in treat.JoinEntities)
+          {
+            <li>@join.Flavor.Type</li>
+          }
+        </td>
+        <td>@treat.Price.ToString("C2")</td>
+      </tr>
+    }
+  </table>
   @using (Html.BeginForm("Logoff", "Account"))
   {
     <input type="submit" class="btn btn-primary" value="Log out" />
@@ -19,3 +37,5 @@ else
   @Html.ActionLink("New User", "Register", "Account", null, new { @class="btn"})
   @Html.ActionLink("Login", "Login", "Account", null, new { @class="btn" })
 }
+
+</div>

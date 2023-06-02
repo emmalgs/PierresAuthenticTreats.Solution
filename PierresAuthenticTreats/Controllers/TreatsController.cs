@@ -51,7 +51,6 @@ namespace PierresAuthenticTreats.Controllers
       string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
       AppUser currentUser = await _userManager.FindByIdAsync(userId);
       treat.User = currentUser;
-      currentUser.OrderTotal += treat.Price;
 
       #nullable enable
       Flavor? thisFlavor = _db.Flavors.FirstOrDefault(f => f.Type == flavor);
@@ -140,7 +139,6 @@ namespace PierresAuthenticTreats.Controllers
     public ActionResult DeleteConfirmed(int id)
     {
       Treat thisTreat = _db.Treats.FirstOrDefault(t => t.TreatId == id);
-      thisTreat.User.OrderTotal -= thisTreat.Price;
 
       _db.Treats.Remove(thisTreat);
       _db.SaveChanges();

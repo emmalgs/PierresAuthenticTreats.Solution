@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using PierresAuthenticTreats.Models;
@@ -26,7 +28,18 @@ namespace PierresAuthenticTreats.Controllers
     {
       string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
       AppUser currentUser = await _userManager.FindByIdAsync(userId);
-      return View(currentUser);
+      List<Treat> userTreats = _db.Treats
+                                  .Include(t => t.User)
+                                  .Include(t => t.JoinEntities)
+                                  .ThenInclude(join => join.Flavor)
+                                  .Where(t => t.User == currentUser)
+                                  .ToList();
+      currentUser.OrderTotal = 0;
+      foreach (Treat treat in userTreats)
+      {
+        currentUser.OrderTotal += treat.Price;
+      }
+      return View(userTreats);
     }
 
     public IActionResult Register() => View();

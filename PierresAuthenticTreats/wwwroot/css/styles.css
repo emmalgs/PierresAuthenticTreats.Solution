@@ -39,12 +39,22 @@
   background-color: var(--main-contrast);
 }
 
+.main-container {
+  padding: 20px;
+  margin: 1em;
+  margin-bottom: 2em;
+  height: 200vh;
+}
+
 .btn {
   border: 2px solid var(--secondary-contrast);
 }
 
-#navbar img {
-  height: 6em;
+.home-splash {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 40px;
 }
 
 .splash-container {
@@ -64,12 +74,7 @@
   animation: move 30s linear infinite;
 }
 
-.main-container {
-  padding: 20px;
-  margin: 1em;
-  margin-bottom: 2em;
-  height: 200vh;
-}
+
 
 form {
   display: flex;
@@ -106,8 +111,14 @@ table td {
 
 .btn-container {
   display: flex;
-  justify-content: space-evenly;
-  width: 50%;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.btn-container > a.btn {
+  margin: 15px;
+  background: var(--secondary-color);
+  text-transform: uppercase;
 }
 
 @keyframes move{
