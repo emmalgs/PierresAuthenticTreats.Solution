@@ -83,5 +83,19 @@ namespace PierresAuthenticTreats.Controllers
                           .FirstOrDefault(t => t.TreatId == id);
       return View(thisTreat);
     }
+
+    public ActionResult Edit(int id)
+    {
+      ViewBag.Flavors = _db.Flavors.Select(f => new SelectListItem
+      {
+        Value = f.FlavorId.ToString(),
+        Text = f.Type
+      }).ToList();
+      Treat thisTreat = _db.Treats    
+                    .Include(t => t.JoinEntities)
+                    .ThenInclude(join => join.Flavor)
+                    .FirstOrDefault(t => t.TreatId == id);
+      return View(thisTreat);
+    }
   }
 }
