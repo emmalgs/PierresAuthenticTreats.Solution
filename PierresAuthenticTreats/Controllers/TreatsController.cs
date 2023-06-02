@@ -46,17 +46,22 @@ namespace PierresAuthenticTreats.Controllers
     }
     
     [HttpPost]
-    public ActionResult Create(Treat treat, string flavor)
+    public async Task<ActionResult> Create(Treat treat, string flavor)
     {
+      string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      AppUser currentUser = await _userManager.FindByIdAsync(userId);
+      treat.User = currentUser;
+
       #nullable enable
       Flavor? thisFlavor = _db.Flavors.FirstOrDefault(f => f.Type == flavor);
       #nullable disable
       if (thisFlavor == null)
       {
-        thisFlavor = new Flavor() { Type = flavor };
+        thisFlavor = new Flavor() { Type = flavor};
         _db.Flavors.Add(thisFlavor);
         _db.SaveChanges();
       }
+      
       #nullable enable
       FlavorTreat? joinEntity = _db.FlavorTreats.FirstOrDefault(join => join.FlavorId == thisFlavor.FlavorId && join.TreatId == treat.TreatId);
       #nullable disable
@@ -68,6 +73,15 @@ namespace PierresAuthenticTreats.Controllers
         _db.SaveChanges();
       }
       return RedirectToAction("Details", new { id = treat.TreatId });
+    }
+
+    public ActionResult Details(int id)
+    {
+      Treat thisTreat = _db.Treats    
+                          .Include(t => t.JoinEntities)
+                          .ThenInclude(join => join.Flavor)
+                          .FirstOrDefault(t => t.TreatId == id);
+      return View(thisTreat);
     }
   }
 }
