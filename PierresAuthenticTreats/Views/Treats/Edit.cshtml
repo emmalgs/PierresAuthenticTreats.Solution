@@ -26,7 +26,7 @@
   @Html.EditorFor(m => m.Price, new { type="number", step="any" })
 
   <label for="flavors">Add Additional Flavor: </label>
-  <input name="flavor" list="flavors">
+  <input name="flavor" list="flavors" placeholder=@Model.JoinEntities[0].Flavor.Type>
   <datalist id="flavors">
     @foreach (var flavor in ViewBag.Flavors)
     {

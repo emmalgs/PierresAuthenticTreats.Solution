@@ -51,6 +51,7 @@ namespace PierresAuthenticTreats.Controllers
       string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
       AppUser currentUser = await _userManager.FindByIdAsync(userId);
       treat.User = currentUser;
+      currentUser.OrderTotal += treat.Price;
 
       #nullable enable
       Flavor? thisFlavor = _db.Flavors.FirstOrDefault(f => f.Type == flavor);
@@ -104,23 +105,27 @@ namespace PierresAuthenticTreats.Controllers
       _db.Treats.Update(treat);
       _db.SaveChanges();
 
-      #nullable enable
-      Flavor? thisFlavor = _db.Flavors.FirstOrDefault(f => f.Type == flavor);
-      #nullable disable
-      if (thisFlavor == null)
+      
+      if (!string.IsNullOrEmpty(flavor))
       {
-        thisFlavor = new Flavor() { Type = flavor};
-        _db.Flavors.Add(thisFlavor);
-        _db.SaveChanges();
-      }
+        #nullable enable
+        Flavor? thisFlavor = _db.Flavors.FirstOrDefault(f => f.Type == flavor);
+        #nullable disable
+        if (thisFlavor == null)
+        {
+          thisFlavor = new Flavor() { Type = flavor};
+          _db.Flavors.Add(thisFlavor);
+          _db.SaveChanges();
+        }
 
-      #nullable enable
-      FlavorTreat? joinEntity = _db.FlavorTreats.FirstOrDefault(join => join.FlavorId == thisFlavor.FlavorId && join.TreatId == treat.TreatId);
-      #nullable disable
-      if (joinEntity == null && thisFlavor.FlavorId != 0)
-      {
-        _db.FlavorTreats.Add(new FlavorTreat() { FlavorId = thisFlavor.FlavorId, TreatId = treat.TreatId});
-        _db.SaveChanges();
+        #nullable enable
+        FlavorTreat? joinEntity = _db.FlavorTreats.FirstOrDefault(join => join.FlavorId == thisFlavor.FlavorId && join.TreatId == treat.TreatId);
+        #nullable disable
+        if (joinEntity == null && thisFlavor.FlavorId != 0)
+        {
+          _db.FlavorTreats.Add(new FlavorTreat() { FlavorId = thisFlavor.FlavorId, TreatId = treat.TreatId});
+          _db.SaveChanges();
+        }
       }
       return RedirectToAction("Details", new { id = treat.TreatId });
     }
@@ -135,6 +140,8 @@ namespace PierresAuthenticTreats.Controllers
     public ActionResult DeleteConfirmed(int id)
     {
       Treat thisTreat = _db.Treats.FirstOrDefault(t => t.TreatId == id);
+      thisTreat.User.OrderTotal -= thisTreat.Price;
+
       _db.Treats.Remove(thisTreat);
       _db.SaveChanges();
       return RedirectToAction("Index");
