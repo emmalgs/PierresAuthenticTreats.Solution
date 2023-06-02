@@ -22,7 +22,12 @@ namespace PierresAuthenticTreats.Controllers
       _signInManager = signInManager;
     }
 
-    public ViewResult Index() => View();
+    public async Task<ActionResult> Index()
+    {
+      string userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      AppUser currentUser = await _userManager.FindByIdAsync(userId);
+      return View(currentUser);
+    }
 
     public IActionResult Register() => View();
 

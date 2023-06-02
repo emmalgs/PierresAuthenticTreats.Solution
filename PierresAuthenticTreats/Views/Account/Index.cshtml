@@ -6,6 +6,7 @@
 {
   <h2>Welcome Back, @User.Identity.Name!</h2>
 
+  <p>Current order total: @Model.OrderTotal.ToString("C2")</p>
   @using (Html.BeginForm("Logoff", "Account"))
   {
     <input type="submit" class="btn btn-primary" value="Log out" />
