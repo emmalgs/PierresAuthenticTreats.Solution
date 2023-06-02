@@ -50,17 +50,18 @@
         @Html.Hidden("flavorId", join.Flavor.FlavorId)
         @Html.Hidden("treatId", Model.TreatId)
         @Html.TextBox("type", join.Flavor.Type)
-        <input type="submit" class="btn btn-primary" value="Edit" />
+        <input type="submit" class="btn btn-primary" value="Apply" />
       }
   </span>
   <span>
       @using (Html.BeginForm("Delete", "Flavors", FormMethod.Post))
       {
         @Html.Hidden("flavorId", join.Flavor.FlavorId)
-        @Html.Hidden("treatId", Model.TreatId)
         <input type="submit" class="btn btn-danger" value="Delete" />
       }
   </span>
   </li>
 }
 </ul>
+
+@Html.ActionLink($"Delete {Model.Name}", "Delete", new { id = Model.TreatId }, new { @class="btn btn-danger"})

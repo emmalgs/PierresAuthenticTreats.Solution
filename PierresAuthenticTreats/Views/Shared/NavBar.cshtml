@@ -1,4 +1,5 @@
-<div>
-  @Html.ActionLink("Home", "Index", "Home")
-  @Html.ActionLink("Treats", "Index", "Treats")
+<div id="nav">
+  @Html.ActionLink("Home", "Index", "Account", null, new { @class="btn" })
+  @Html.ActionLink("Treats", "Index", "Treats", null, new { @class="btn" })
+  @Html.ActionLink("Flavors", "Index", "Flavors", null, new { @class="btn" })
 </div>

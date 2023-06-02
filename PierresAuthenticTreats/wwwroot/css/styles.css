@@ -1,0 +1,120 @@
+:root {
+  --main-color: #0E4749;
+  --main-contrast: #EFE7DA;
+  --font-color: #002626;
+  --secondary-color: #95C623;
+  --secondary-contrast: #E55812;
+}
+
+#header {
+  display: flex;
+  justify-content: space-evenly;
+  height: 20vh;
+  width: 100vw;
+  background-size: contain;
+  background-color: var(--main-color);
+}
+
+#header h1 {
+  text-align: center;
+  padding-top: 8vh;
+  font-size: 2em;
+}
+
+#header h1 a {
+  text-decoration: none;
+  color: var(--main-contrast);
+  text-shadow: 1px 1px 1px var(--font-color);
+}
+
+#header h1 a:hover {
+  color: var(--secondary-contrast);
+}
+
+#navbar {
+  padding: 30px;
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  background-color: var(--main-contrast);
+}
+
+.btn {
+  border: 2px solid var(--secondary-contrast);
+}
+
+#navbar img {
+  height: 6em;
+}
+
+.splash-container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.splash-animation {
+  position: absolute;
+  z-index: -1;
+  top: 30vh;
+  width: 80vw;
+  height: 80vh;
+  background-image: url("../img/sillyguy.gif");
+  background-position: contain;
+  background-repeat: no-repeat;
+  animation: move 30s linear infinite;
+}
+
+.main-container {
+  padding: 20px;
+  margin: 1em;
+  margin-bottom: 2em;
+  height: 200vh;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+  justify-content: space-evenly;
+}
+
+table {
+  padding: 20px;
+  margin: 30px;
+}
+
+table th {
+  padding: 10px;
+
+}
+
+table td {
+  padding: 8px;
+}
+
+#footer {
+  background-color: var(--secondary-color);
+  width: 100vw;
+  position: fixed;
+  bottom: 0;
+  height: 12vh;
+  display: flex;
+  padding: 20px;
+  justify-content: space-evenly;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: space-evenly;
+  width: 50%;
+}
+
+@keyframes move{
+  0% {
+    transform: translateX(-10%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}

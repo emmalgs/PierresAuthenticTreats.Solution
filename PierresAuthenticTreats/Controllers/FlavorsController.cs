@@ -18,13 +18,23 @@ namespace PierresAuthenticTreats.Controllers
       _db = db;
     }
 
-    [HttpPost]
-    public ActionResult Delete(int flavorId, int treatId)
+    public ActionResult Index()
     {
+      List<Flavor> allFlavors = _db.Flavors
+                                  .Include(f => f.JoinEntities)
+                                  .ThenInclude(join => join.Treat)
+                                  .ToList();
+      return View(allFlavors);
+    }
+
+    [HttpPost]
+    public ActionResult Delete(int flavorId)
+    {
+      string referringUrl = Request.Headers["Referer"];
       Flavor thisFlavor = _db.Flavors.FirstOrDefault(f => f.FlavorId == flavorId);
       _db.Flavors.Remove(thisFlavor);
       _db.SaveChanges();
-      return RedirectToAction("Edit", "Treats", new { id = treatId });
+      return Redirect(referringUrl);
     }
 
     [HttpPost]
