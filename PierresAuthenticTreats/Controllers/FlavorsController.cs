@@ -23,6 +23,7 @@ namespace PierresAuthenticTreats.Controllers
       List<Flavor> allFlavors = _db.Flavors
                                   .Include(f => f.JoinEntities)
                                   .ThenInclude(join => join.Treat)
+                                  .ThenInclude(treat => treat.User)
                                   .ToList();
       return View(allFlavors);
     }
