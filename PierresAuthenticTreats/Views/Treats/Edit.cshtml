@@ -1,13 +1,15 @@
 @{
   Layout = "_Layout";
 }
-@using PierresAuthenticTreats.Models
+
 @model PierresAuthenticTreats.Models.Treat
 
 <h2>Edit @Model.Name</h2>
 
 @using (Html.BeginForm())
 {
+  @Html.HiddenFor(m => m.TreatId)
+
   @Html.LabelFor(m => m.Name)
   @Html.EditorFor(m => m.Name)
 
@@ -22,14 +24,18 @@
       <option value="@flavor.Text">@flavor.Text</option>
     }
   </datalist>
-
   <input type="submit" value="Apply Changes" class="btn btn-primary" />
 }
+
+
+@using PierresAuthenticTreats.Models
 
 <h2>Edit or remove flavors for @Model.Name: </h2>
 <ul>
 @foreach (FlavorTreat join in Model.JoinEntities)
 {
   <li>@join.Flavor.Type</li>
+
+
 }
 </ul>

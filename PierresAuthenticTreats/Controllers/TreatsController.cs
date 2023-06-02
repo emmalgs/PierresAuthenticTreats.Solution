@@ -92,10 +92,37 @@ namespace PierresAuthenticTreats.Controllers
         Text = f.Type
       }).ToList();
       Treat thisTreat = _db.Treats    
-                    .Include(t => t.JoinEntities)
-                    .ThenInclude(join => join.Flavor)
-                    .FirstOrDefault(t => t.TreatId == id);
+                          .Include(t => t.JoinEntities)
+                          .ThenInclude(join => join.Flavor)
+                          .FirstOrDefault(t => t.TreatId == id);
       return View(thisTreat);
+    }
+
+    [HttpPost]
+    public ActionResult Edit(Treat treat, string flavor)
+    {
+      _db.Treats.Update(treat);
+      _db.SaveChanges();
+
+      #nullable enable
+      Flavor? thisFlavor = _db.Flavors.FirstOrDefault(f => f.Type == flavor);
+      #nullable disable
+      if (thisFlavor == null)
+      {
+        thisFlavor = new Flavor() { Type = flavor};
+        _db.Flavors.Add(thisFlavor);
+        _db.SaveChanges();
+      }
+
+      #nullable enable
+      FlavorTreat? joinEntity = _db.FlavorTreats.FirstOrDefault(join => join.FlavorId == thisFlavor.FlavorId && join.TreatId == treat.TreatId);
+      #nullable disable
+      if (joinEntity == null && thisFlavor.FlavorId != 0)
+      {
+        _db.FlavorTreats.Add(new FlavorTreat() { FlavorId = thisFlavor.FlavorId, TreatId = treat.TreatId});
+        _db.SaveChanges();
+      }
+      return RedirectToAction("Details", new { id = treat.TreatId });
     }
   }
 }
