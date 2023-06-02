@@ -15,7 +15,7 @@ namespace Library
 
       builder.Services.AddControllersWithViews();
 
-      builder.Services.AddDbContext<TreatsContext>(
+      builder.Services.AddDbContext<PierreContext>(
                         dbContextOptions => dbContextOptions
                           .UseMySql(
                             builder.Configuration["ConnectionStrings:DefaultConnection"], ServerVersion.AutoDetect(builder.Configuration["ConnectionStrings:DefaultConnection"]
@@ -24,7 +24,7 @@ namespace Library
                       );
       
       builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-          .AddEntityFrameworkStores<TreatsContext>()
+          .AddEntityFrameworkStores<PierreContext>()
           .AddDefaultTokenProviders();
 
       builder.Services.Configure<IdentityOptions>(options =>
