@@ -31,7 +31,7 @@
   color: var(--secondary-contrast);
 }
 
-#navbar {
+#nav {
   padding: 30px;
   display: flex;
   justify-content: space-evenly;

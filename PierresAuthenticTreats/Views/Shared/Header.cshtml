@@ -1,0 +1,10 @@
+<div id="header">
+@if (User.Identity.IsAuthenticated)
+{
+  <h2>@User.Identity.Name</h2>
+}
+else
+{
+  <h2>Welcome to Pierre's Authentic Treats!</h2>
+}
+</div>

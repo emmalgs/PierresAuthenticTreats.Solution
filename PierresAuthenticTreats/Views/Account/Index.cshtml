@@ -11,3 +11,10 @@
     <input type="submit" class="btn btn-primary" value="Log out" />
   }
 }
+
+else
+{
+  <h2>Please log in or register a new account:</h2>
+  @Html.ActionLink("New User", "Register", "Account", null, new { @class="btn"})
+  @Html.ActionLink("Login", "Login", "Account", null, new { @class="btn" })
+}
