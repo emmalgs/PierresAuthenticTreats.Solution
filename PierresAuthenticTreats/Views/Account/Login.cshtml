@@ -1,0 +1,26 @@
+@{
+  Layout = "_Layout";
+}
+
+@using PierresAuthenticTreats.ViewModels
+@model LoginViewModel
+
+<h2>Log in to your Treats Account</h2>
+
+@if (!ViewData.ModelState.IsValid)
+{
+  @Html.ValidationSummary("Please fix the following error(s) before resubmitting: ")
+}
+
+@using (Html.BeginForm())
+{
+  @Html.LabelFor(m => m.UserName)
+  @Html.TextBoxFor(m => m.UserName)
+
+  @Html.LabelFor(m => m.Password)
+  @Html.EditorFor(m => m.Password)
+
+  <input type="submit" value="Log in" class="btn btn-primary" />
+}
+
+@Html.ActionLink("Don't have an account?", "Register")
