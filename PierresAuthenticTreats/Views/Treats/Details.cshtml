@@ -1,0 +1,14 @@
+@{
+  Layout = "_Layout";
+}
+
+@using PierresAuthenticTreats.Models
+@model PierresAuthenticTreats.Models.Treat
+
+<h2>@Model.Name Details</h2>
+
+<p>@Model.Price.ToString("C2")</p>
+@foreach (FlavorTreat join in Model.JoinEntities)
+{
+  <p>@join.Flavor.Type</p>
+}

@@ -12,5 +12,10 @@
 }
 else
 {
-  <p>treats!</p>
+  @foreach (Treat treat in Model)
+  {
+    <p>@Html.ActionLink($"{treat.Name}", "Details", new { id = treat.TreatId })</p>
+  }
 }
+
+@Html.ActionLink("Create Treat", "Create")
