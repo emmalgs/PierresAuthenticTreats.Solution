@@ -57,6 +57,7 @@ namespace PierresAuthenticTreats.Controllers
         IdentityResult result = await _userManager.CreateAsync(user, model.Password);
         if (result.Succeeded)
         {
+          user.OrderTotal = 0;
           return RedirectToAction("Login");
         }
         else
