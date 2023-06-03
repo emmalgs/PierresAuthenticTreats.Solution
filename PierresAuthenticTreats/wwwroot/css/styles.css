@@ -56,7 +56,7 @@
   margin: auto;
 }
 
-form {
+.edit-treat {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -96,6 +96,31 @@ table td .btn {
   text-decoration: none;
   color: var(--main-color)
 }
+
+.edit-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+
+.edit-main {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.flavor-edit {
+  display: flex;
+}
+
+.flavor-edit:first-child {
+  display: flex;
+}
+
+.flavor-edit input[type="text"] {
+  width: 50%;
+}
+
 
 #footer {
   background-color: var(--secondary-color);

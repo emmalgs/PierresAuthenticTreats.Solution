@@ -3,65 +3,71 @@
 }
 
 @model PierresAuthenticTreats.Models.Treat
-<hr />
-<h2>Edit @Model.Name</h2>
+<div class="edit-head">
+  <h2>@Model.Name</h2>
+  <br>
+  @Html.ActionLink($"Delete {Model.Name}", "Delete", new { id = Model.TreatId }, new { @class="btn btn-danger big-delete"})
+  <br>
+      <h4>Current flavor(s) in @Model.Name:</h4>
+      <ul>
+        @foreach (FlavorTreat join in Model.JoinEntities)
+        {
+          <li>@join.Flavor.Type</li>
+        }
+      </ul>
+</div>
 <hr />
 
-<h3>Current flavor(s) in @Model.Name:</h3>
-<ul>
+<div class="edit-main">
+  <div class="edit-grp">
+    <h3>Edit:</h3>
+    @using (Html.BeginForm())
+    {
+      <div class="edit-treat">
+      @Html.HiddenFor(m => m.TreatId)
+
+      @Html.LabelFor(m => m.Name)
+      @Html.EditorFor(m => m.Name)
+
+      @Html.LabelFor(m => m.Price)
+      @Html.EditorFor(m => m.Price, new { type="number", step="any" })
+
+      <label for="flavors">Add Additional Flavor: </label>
+      <input name="flavor" list="flavors" placeholder=@Model.JoinEntities[0].Flavor.Type>
+      <datalist id="flavors">
+        @foreach (var flavor in ViewBag.Flavors)
+        {
+          <option value="@flavor.Text">@flavor.Text</option>
+        }
+      </datalist>
+      <input type="submit" value="Apply Changes" class="btn btn-primary" />
+      </div>
+    }
+  </div>
+
+  <div class="edit-grp">
+  @using PierresAuthenticTreats.Models
+
+  <h3>Edit or remove flavors: </h3>
   @foreach (FlavorTreat join in Model.JoinEntities)
   {
-    <li>@join.Flavor.Type</li>
+    <div class="flavor-edit">
+        @using (Html.BeginForm("Edit", "Flavors", FormMethod.Post))
+        {
+          @Html.Hidden("flavorId", join.Flavor.FlavorId)
+          @Html.Hidden("treatId", Model.TreatId)
+          @Html.TextBox("type", join.Flavor.Type)
+          <input type="submit" class="btn btn-primary" value="Apply" />
+        }
+
+        @using (Html.BeginForm("Delete", "Flavors", FormMethod.Post))
+        {
+          @Html.Hidden("flavorId", join.Flavor.FlavorId)
+          <input type="submit" class="btn btn-danger" value="Delete" />
+        }
+      </div>
   }
-</ul>
-
-@using (Html.BeginForm())
-{
-  @Html.HiddenFor(m => m.TreatId)
-
-  @Html.LabelFor(m => m.Name)
-  @Html.EditorFor(m => m.Name)
-
-  @Html.LabelFor(m => m.Price)
-  @Html.EditorFor(m => m.Price, new { type="number", step="any" })
-
-  <label for="flavors">Add Additional Flavor: </label>
-  <input name="flavor" list="flavors" placeholder=@Model.JoinEntities[0].Flavor.Type>
-  <datalist id="flavors">
-    @foreach (var flavor in ViewBag.Flavors)
-    {
-      <option value="@flavor.Text">@flavor.Text</option>
-    }
-  </datalist>
-  <input type="submit" value="Apply Changes" class="btn btn-primary" />
-}
+  </div>
 
 
-@using PierresAuthenticTreats.Models
-
-<h3>Edit or remove flavors for @Model.Name: </h3>
-<ul>
-@foreach (FlavorTreat join in Model.JoinEntities)
-{
-  <li>
-    <span>
-      @using (Html.BeginForm("Edit", "Flavors", FormMethod.Post))
-      {
-        @Html.Hidden("flavorId", join.Flavor.FlavorId)
-        @Html.Hidden("treatId", Model.TreatId)
-        @Html.TextBox("type", join.Flavor.Type)
-        <input type="submit" class="btn btn-primary" value="Apply" />
-      }
-  </span>
-  <span>
-      @using (Html.BeginForm("Delete", "Flavors", FormMethod.Post))
-      {
-        @Html.Hidden("flavorId", join.Flavor.FlavorId)
-        <input type="submit" class="btn btn-danger" value="Delete" />
-      }
-  </span>
-  </li>
-}
-</ul>
-
-@Html.ActionLink($"Delete {Model.Name}", "Delete", new { id = Model.TreatId }, new { @class="btn btn-danger"})
+</div>
